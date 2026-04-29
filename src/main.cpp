@@ -6,7 +6,7 @@
 #include<QWidget>
 #include <QFile>
 #include <QString>
-
+#include <QVBoxLayout>
 #include "main.h"
 
 
@@ -30,9 +30,24 @@ void checkLoadStyle() {
 }
 int main(int argc, char *argv[]){
 QApplication app(argc, argv);
+    QWidget window;
+    window.setWindowFlags(Qt::FramelessWindowHint);
+    window.setAttribute(Qt::WA_TranslucentBackground);
+    QVBoxLayout *layout = new QVBoxLayout(&window);
+    QWidget *topBar = new QWidget();
+    topBar->setFixedHeight(40);
+    topBar->setStyleSheet(R"(background-color: rgba(20, 20, 20 ,120);
+                            border-top-left-radius:10px;
+                            border-top-right-radius:10px;
+                          )");
+
  // loadStyle(app,":/styles/styles.qss");checkLoadStyle();
-QLabel label("Yet another Task Manager");
-label.show();
+QLabel *label = new QLabel("Yet another Task Manager");
+    label->setStyleSheet("color:white;");
+    layout->addWidget(topBar);
+    layout->addWidget(label);
+window.resize(800,600);
+    window.show();
 
     app.setStyleSheet(R"(
 QMainWindow {
@@ -51,8 +66,7 @@ QPushButton {
     border-radius: 10px;
 }
 )");
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setWindowAttribute(Qt::WA_TranslucentBackground);
+
 
 
 return app.exec();}
